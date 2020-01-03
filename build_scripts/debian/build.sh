@@ -22,7 +22,7 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 debian_directory_creator=$script_dir/dir_creator.sh
 
 # Install dependencies for the build
-sudo apt-get install -y libssl-dev libffi-dev debhelper python3-dev python3-setuptools
+sudo apt-get install -y libssl-dev libffi-dev debhelper python3-dev python3-setuptools virtualenv
 # Download, Extract, Patch, Build CLI
 tmp_pkg_dir=$(mktemp -d)
 working_dir=$(mktemp -d)
@@ -38,27 +38,31 @@ rm -rf $source_dir/../debian_output
 [ -d $local_repo/privates ] && cp $local_repo/privates/*.whl $tmp_pkg_dir
 
 # Build Python from source and include
-python_dir=$(mktemp -d)
-python_archive=$(mktemp)
-wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz -qO $python_archive
-tar -xvzf $python_archive -C $python_dir
-echo "Python dir is $python_dir"
+# python_dir=$(mktemp -d)
+# python_archive=$(mktemp)
+# wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz -qO $python_archive
+# tar -xvzf $python_archive -C $python_dir
+# echo "Python dir is $python_dir"
 
-#  clean any previous make files
-make clean || echo "Nothing to clean"
+# #  clean any previous make files
+# make clean || echo "Nothing to clean"
 
-$python_dir/*/configure --srcdir $python_dir/* --prefix $source_dir/python_env
-make
-#  required to run the 'make install'
-sudo apt-get install -y zlib1g-dev
-make install
+# $python_dir/*/configure --srcdir $python_dir/* --prefix $source_dir/python_env
+# make
+# #  required to run the 'make install'
+# sudo apt-get install -y zlib1g-dev
+# make install
 
-# Set env var to ensure build.py uses the python we built from source.
-export CUSTOM_PYTHON=$source_dir/python_env/bin/python3
-export CUSTOM_PIP=$source_dir/python_env/bin/pip3
+# # Set env var to ensure build.py uses the python we built from source.
+# export CUSTOM_PYTHON=$source_dir/python_env/bin/python3
+# export CUSTOM_PIP=$source_dir/python_env/bin/pip3
+
+# Create virtualenv
+cd $source_dir
+rm -rf $source_dir/python_env
+virtualenv $source_dir/python_env --python=python3
 
 # Build mssql-cli wheel from source.
-cd $source_dir
 $source_dir/python_env/bin/python3 $source_dir/build.py build;
 cd -
 
