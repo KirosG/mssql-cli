@@ -58,9 +58,11 @@ rm -rf $source_dir/../debian_output
 # export CUSTOM_PIP=$source_dir/python_env/bin/pip3
 
 # Create virtualenv
+deactivate
 cd $source_dir
 rm -rf $source_dir/python_env
 virtualenv $source_dir/python_env --python=python3
+source $source_dir/python_env/bin/activate
 
 # Build mssql-cli wheel from source.
 $source_dir/python_env/bin/python3 $source_dir/dev_setup.py
