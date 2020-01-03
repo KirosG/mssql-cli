@@ -63,6 +63,7 @@ rm -rf $source_dir/python_env
 virtualenv $source_dir/python_env --python=python3
 
 # Build mssql-cli wheel from source.
+$source_dir/python_env/bin/python3 $source_dir/dev_setup.py
 $source_dir/python_env/bin/python3 $source_dir/build.py build;
 cd -
 
