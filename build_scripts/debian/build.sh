@@ -38,11 +38,11 @@ rm -rf $source_dir/../debian_output
 [ -d $local_repo/privates ] && cp $local_repo/privates/*.whl $tmp_pkg_dir
 
 # Build Python from source and include
-# python_dir=$(mktemp -d)
-# python_archive=$(mktemp)
-# wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz -qO $python_archive
-# tar -xvzf $python_archive -C $python_dir
-# echo "Python dir is $python_dir"
+python_dir=$(mktemp -d)
+python_archive=$(mktemp)
+wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz -qO $python_archive
+tar -xvzf $python_archive -C $python_dir
+echo "Python dir is $python_dir"
 
 #  clean any previous make files
 make clean || echo "Nothing to clean"
