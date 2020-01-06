@@ -29,12 +29,11 @@ working_dir=$(mktemp -d)
 
 cd $working_dir
 source_dir=$local_repo
-deb_file=$local_repo/../debian_output_tmp/mssql-cli_$CLI_VERSION-${CLI_VERSION_REVISION:=1}_all.deb
+deb_file=$local_repo/../mssql-cli_$CLI_VERSION-${CLI_VERSION_REVISION:=1}_all.deb
 
 # clean up old build output
 rm -rf $source_dir/debian
 rm -rf $source_dir/../debian_output
-rm -rf $source_dir/../debian_output_tmp
 
 [ -d $local_repo/privates ] && cp $local_repo/privates/*.whl $tmp_pkg_dir
 
@@ -60,7 +59,6 @@ $source_dir/python_env/bin/pip3 install $all_modules
 # Add the debian files.
 mkdir $source_dir/debian
 mkdir $source_dir/../debian_output
-mkdir $source_dir/../debian_output_tmp
 
 # Create temp dir for the debian/ directory used for CLI build.
 cli_debian_dir_tmp=$(mktemp -d)
