@@ -29,11 +29,12 @@ working_dir=$(mktemp -d)
 
 cd $working_dir
 source_dir=$local_repo
-deb_file=$local_repo/../mssql-cli_$CLI_VERSION-${CLI_VERSION_REVISION:=1}_all.deb
+deb_file=$local_repo/../debian_output_tmp/mssql-cli_$CLI_VERSION-${CLI_VERSION_REVISION:=1}_all.deb
 
 # clean up old build output
 rm -rf $source_dir/debian
 rm -rf $source_dir/../debian_output
+rm -rf $source_dir/../debian_output_tmp
 
 [ -d $local_repo/privates ] && cp $local_repo/privates/*.whl $tmp_pkg_dir
 
@@ -57,7 +58,7 @@ all_modules=`find $dist_dir -not -name "mssql_cli-dev-latest-py2.py3-none-manyli
 $source_dir/python_env/bin/pip3 install $all_modules
 
 # Add the debian files.
-mkdir $source_dir/debian
+mkdir $source_dir/../debian_output
 
 # Create temp dir for the debian/ directory used for CLI build.
 cli_debian_dir_tmp=$(mktemp -d)
@@ -66,7 +67,7 @@ $debian_directory_creator $cli_debian_dir_tmp $source_dir $CLI_VERSION
 cp -r $cli_debian_dir_tmp/* $source_dir/debian
 cd $source_dir
 dpkg-buildpackage -us -uc
-cp $deb_file $source_dir/dist
+cp $deb_file $source_dir/../debian_output
 # Create a second copy for latest dev version to be used by homepage.
-cp $deb_file $source_dir/dist/mssql-cli-dev-latest.deb
+cp $deb_file $source_dir/../debian_output/mssql-cli-dev-latest.deb
 echo "The archive has also been outputted to $source_dir/../debian_output"
