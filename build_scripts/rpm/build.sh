@@ -8,6 +8,11 @@ fi
 
 export REPO_PATH=$1
 
+# install dependencies
+sudo yum repolist
+sudo yum update
+sudo yum install libffi-devel openssl-devel 
+
 # Clean output dir.
 rm -rf ~/rpmbuild
 rm -rf ${REPO_PATH}/../rpm_output
