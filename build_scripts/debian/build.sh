@@ -46,7 +46,7 @@ source $source_dir/python_env/bin/activate
 
 # Build mssql-cli wheel from source.
 $source_dir/python_env/bin/python3 $source_dir/dev_setup.py
-$source_dir/python_env/bin/python3 $source_dir/build.py build;
+$source_dir/python_env/bin/python3 $source_dir/build.py build
 cd -
 
 # Install mssql-cli wheel.
@@ -71,3 +71,5 @@ cp $deb_file $source_dir/../debian_output
 # Create a second copy for latest dev version to be used by homepage.
 cp $deb_file $source_dir/../debian_output/mssql-cli-dev-latest.deb
 echo "The archive has also been outputted to $source_dir/../debian_output"
+
+deactivate
