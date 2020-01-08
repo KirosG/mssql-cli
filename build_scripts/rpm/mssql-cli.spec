@@ -60,7 +60,6 @@ make clean || echo "Nothing to clean"
 %{_builddir}/*/configure --srcdir %{_builddir}/* --prefix %{python_dir}
 make
 make install
-pip install --update pip
 
 # Build mssql-cli wheel from source.
 export CUSTOM_PYTHON=%{python_dir}/bin/python3
