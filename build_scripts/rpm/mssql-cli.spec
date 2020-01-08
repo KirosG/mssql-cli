@@ -47,7 +47,8 @@ Requires:       libunwind, libicu
 # Clean previous build directory.
 rm -rf %{_builddir}/*
 # Create virtualenv
-virtualenv %{python_dir} --python=python3
+sudo pip3 install virtualenv
+python3 -m virtualenv %{python_dir} --python=python3
 source %{python_dir}/bin/activate
 
 %build
