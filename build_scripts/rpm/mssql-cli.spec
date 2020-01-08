@@ -43,28 +43,10 @@ Requires:       libunwind, libicu
     We’re excited to introduce mssql-cli, a new and interactive command line query tool for SQL Server.
     This open source tool works cross-platform and proud to be a part of the dbcli.org community.
 
-%prep
-# Clean previous build directory.
-rm -rf %{_builddir}/*
-# Download, Extract Python3
-python_archive=$(mktemp)
-wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz -qO $python_archive
-tar -xvzf $python_archive -C %{_builddir}
-
 %build
-# clean any previous make files
-make clean || echo "Nothing to clean"
-
-# Build Python from source
-%{_builddir}/*/configure --srcdir %{_builddir}/* --prefix %{python_dir}
-make
-make install
-
 # Build mssql-cli wheel from source.
-export CUSTOM_PYTHON=%{python_dir}/bin/python3
-export CUSTOM_PIP=%{python_dir}/bin/pip3
-
-%{python_dir}/bin/python3 %{repo_path}/build.py build
+python %{repo_path}/dev_setup.py
+python %{repo_path}/build.py build
 
 %install
 # Install mssql-cli
@@ -72,7 +54,7 @@ dist_dir=%{repo_path}/dist
 
 # Ignore the dev latest wheel since build outputs two.
 all_modules=`find $dist_dir -not -name "mssql_cli-dev-latest-py2.py3-none-manylinux1_x86_64.whl" -type f`
-%{python_dir}/bin/pip3  install $all_modules
+pip install $all_modules
 
 # Create executable
 mkdir -p %{buildroot}%{cli_lib_dir}

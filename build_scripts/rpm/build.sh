@@ -15,6 +15,7 @@ sudo yum install -y gcc git rpm-build rpm-devel rpmlint make bash coreutils diff
 # Clean output dir.
 rm -rf ~/rpmbuild
 rm -rf ${REPO_PATH}/../rpm_output
+rm -rf ${REPO_PATH}/python_env
 
 # create virtualenv
 deactivate
