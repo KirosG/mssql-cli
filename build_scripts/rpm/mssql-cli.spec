@@ -64,6 +64,7 @@ make install
 export CUSTOM_PYTHON=%{python_dir}/bin/python3
 export CUSTOM_PIP=%{python_dir}/bin/pip3
 
+%{python_dir}/bin/python3 %{repo_path}/dev_setup.py
 %{python_dir}/bin/python3 %{repo_path}/build.py build
 
 %install
