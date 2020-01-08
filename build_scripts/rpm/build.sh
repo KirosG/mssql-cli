@@ -10,7 +10,7 @@ export REPO_PATH=$1
 
 sudo yum repolist
 sudo yum update
-sudo yum install -y gcc git rpm-build rpm-devel rpmlint make bash coreutils diffutils patch rpmdevtools python libffi-devel python-devel openssl-devel libunwind
+sudo yum install -y gcc git rpm-build rpm-devel rpmlint make bash coreutils diffutils patch rpmdevtools python3 libffi-devel python3-devel openssl-devel libunwind
 
 # Clean output dir.
 rm -rf ~/rpmbuild
