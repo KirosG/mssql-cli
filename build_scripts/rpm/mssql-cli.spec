@@ -12,10 +12,10 @@
 %define release        1%{?dist}
 %define time_stamp     %(date +%y%m%d%H%M)
 %define base_version   0.17.3
-%define python_dir     %{_builddir}/python_env
 %define python_url     https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz
 %define cli_lib_dir    %{_libdir}/mssql-cli
 %define repo_path      %{getenv:REPO_PATH}
+%define python_dir     %{repo_path}/python_env
 %define official_build %{getenv:MSSQL_CLI_OFFICIAL_BUILD}
 
 %if "%{official_build}" != "True"
