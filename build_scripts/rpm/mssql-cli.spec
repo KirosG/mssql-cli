@@ -36,6 +36,7 @@ BuildArch:      x86_64
 BuildRequires:  gcc
 BuildRequires:  libffi-devel
 BuildRequires:  openssl-devel
+BuildRequires: /usr/bin/pathfix.py
 
 Requires:       libunwind, libicu
 
@@ -59,6 +60,7 @@ make clean || echo "Nothing to clean"
 %{_builddir}/*/configure --srcdir %{_builddir}/* --prefix %{python_dir}
 make
 make install
+pip install --update pip
 
 # Build mssql-cli wheel from source.
 export CUSTOM_PYTHON=%{python_dir}/bin/python3
@@ -73,7 +75,10 @@ dist_dir=%{repo_path}/dist
 
 # Ignore the dev latest wheel since build outputs two.
 all_modules=`find $dist_dir -not -name "mssql_cli-dev-latest-py2.py3-none-manylinux1_x86_64.whl" -type f`
-%{python_dir}/bin/pip3  install $all_modules
+%{python_dir}/bin/pip3 install $all_modules
+
+# Fix ambiguous Python shebangs
+pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}%{python3_sitearch} %{buildroot}%{_bindir}/*
 
 # Create executable
 mkdir -p %{buildroot}%{cli_lib_dir}
