@@ -21,7 +21,7 @@ deactivate
 virtualenv ${REPO_PATH}/python_env --python=python3
 source ${REPO_PATH}/python_env/bin/activate
 
-rpmbuild -v -bb --clean mssql-cli.spec
+rpmbuild -v -bb --clean ${REPO_PATH}/build_scripts/rpm/mssql-cli.spec
 
 # Copy build artifact to output dir.
 mkdir ${REPO_PATH}/../rpm_output
