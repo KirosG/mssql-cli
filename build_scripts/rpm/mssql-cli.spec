@@ -77,7 +77,7 @@ all_modules=`find $dist_dir -not -name "mssql_cli-dev-latest-py2.py3-none-manyli
 %{python_dir}/bin/pip3 install $all_modules
 
 # Fix ambiguous Python shebangs
-pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}%{python3_sitearch} %{buildroot}%{_bindir}/*
+pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{python3_sitearch}/*
 
 # Create executable
 mkdir -p %{buildroot}%{cli_lib_dir}
