@@ -36,7 +36,6 @@ BuildArch:      x86_64
 BuildRequires:  gcc
 BuildRequires:  libffi-devel
 BuildRequires:  openssl-devel
-BuildRequires: /usr/bin/pathfix.py
 
 Requires:       libunwind, libicu
 
@@ -48,25 +47,27 @@ Requires:       libunwind, libicu
 # Clean previous build directory.
 rm -rf %{_builddir}/*
 # Download, Extract Python3
-python_archive=$(mktemp)
-wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz -qO $python_archive
-tar -xvzf $python_archive -C %{_builddir}
+# python_archive=$(mktemp)
+# wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz -qO $python_archive
+# tar -xvzf $python_archive -C %{_builddir}
+virtualenv %{python_dir} --python=python3
+source %{python_dir}/bin/activate
 
 %build
 # clean any previous make files
-make clean || echo "Nothing to clean"
+# make clean || echo "Nothing to clean"
 
-# Build Python from source
-%{_builddir}/*/configure --srcdir %{_builddir}/* --prefix %{python_dir}
-make
-make install
+# # Build Python from source
+# %{_builddir}/*/configure --srcdir %{_builddir}/* --prefix %{python_dir}
+# make
+# make install
 
 # Build mssql-cli wheel from source.
-export CUSTOM_PYTHON=%{python_dir}/bin/python3
-export CUSTOM_PIP=%{python_dir}/bin/pip3
+# export CUSTOM_PYTHON=%{python_dir}/bin/python3
+# export CUSTOM_PIP=%{python_dir}/bin/pip3
 
-%{python_dir}/bin/python3 %{repo_path}/dev_setup.py
-%{python_dir}/bin/python3 %{repo_path}/build.py build
+python %{repo_path}/dev_setup.py
+python %{repo_path}/build.py build
 
 %install
 # Install mssql-cli
@@ -74,10 +75,7 @@ dist_dir=%{repo_path}/dist
 
 # Ignore the dev latest wheel since build outputs two.
 all_modules=`find $dist_dir -not -name "mssql_cli-dev-latest-py2.py3-none-manylinux1_x86_64.whl" -type f`
-%{python_dir}/bin/pip3 install $all_modules
-
-# Fix ambiguous Python shebangs
-pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{python3_sitearch}/*
+pip install $all_modules
 
 # Create executable
 mkdir -p %{buildroot}%{cli_lib_dir}
@@ -91,3 +89,5 @@ printf '#!/usr/bin/env bash\n%{cli_lib_dir}/bin/python3 -Esm mssqlcli.main "$@"'
 # Include executable mssql-cli.
 %attr(0755,root,root) %{_bindir}/mssql-cli
 %attr(-,root,root) %{cli_lib_dir}
+
+deactivate
