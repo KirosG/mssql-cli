@@ -78,5 +78,3 @@ printf '#!/usr/bin/env bash\n%{cli_lib_dir}/bin/python3 -Esm mssqlcli.main "$@"'
 # Include executable mssql-cli.
 %attr(0755,root,root) %{_bindir}/mssql-cli
 %attr(-,root,root) %{cli_lib_dir}
-
-deactivate
