@@ -16,7 +16,7 @@ sudo yum install -y gcc git rpm-build rpm-devel rpmlint make bash coreutils diff
 rm -rf ~/rpmbuild
 rm -rf ${REPO_PATH}/../rpm_output
 
-rpmbuild -v -bb --clean ${REPO_PATH}/build_scripts/rpm/mssql-cli.spec
+rpmbuild -v -bb --rpm-rpmbuild-define "_build_id_links none" --clean ${REPO_PATH}/build_scripts/rpm/mssql-cli.spec
 
 # Copy build artifact to output dir.
 mkdir ${REPO_PATH}/../rpm_output
