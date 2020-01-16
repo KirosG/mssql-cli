@@ -1,0 +1,6 @@
+mssql-cli (0.18.0.dev2001161940-1) unstable; urgency=low
+
+  * Debian package release.
+
+ -- Microsft SQL Server CLI Team <sqlcli@microsoft.com>  Thu, 16 Jan 2020 19:42:30 +0000
+

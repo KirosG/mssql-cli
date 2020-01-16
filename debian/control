@@ -1,0 +1,14 @@
+Source: mssql-cli
+Maintainer: Microsoft SQL Server CLI Team <sqlcli@microsoft.com>
+Build-Depends: debhelper (>= 11), libssl-dev, libffi-dev, python3-all, python3-setuptools, dh-python
+Standards-Version: 3.9.5
+Homepage: https://github.com/dbcli/mssql-cli
+
+Package: mssql-cli
+Architecture: all
+Depends: ${python3:Depends}, ${python3:Depends}
+Description: mssql-cli
+    We're excited to introduce mssql-cli, a new and interactive command line query tool for SQL Server.
+    This open source tool works cross-platform and proud to be a part of the dbcli.org community.
+
+# Depends: libunwind8, libicu52 | libicu55 | libicu57 | libicu60
