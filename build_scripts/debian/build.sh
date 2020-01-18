@@ -22,8 +22,9 @@ python3 dev_setup.py
 dpkg-buildpackage -us -uc
 deb_file=$local_repo/../mssql-cli_$CLI_VERSION-${CLI_VERSION_REVISION:=1}_all.deb
 
-# clean up old build output
+# recreate build output
 rm -rf $source_dir/../debian_output
+mkdir $source_dir/../debian_output
 
 # Create a second copy for latest dev version to be used by homepage.
 cp $deb_file $source_dir/../debian_output
